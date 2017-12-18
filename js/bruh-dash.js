@@ -10,8 +10,8 @@ var global = window || GLOBAL;
 global.bruhdash = {
 
   // returns the first element of an array
-  first: function () {
-      
+  first: function (arr) {
+      return arr.shift();
   },
 
   // returns the last element of an array
