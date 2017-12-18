@@ -20,8 +20,8 @@ global.bruhdash = {
   },
 
   // returns the index of the first matching element from left to right
-  indexOf: function () {
-
+  indexOf: function (arr, elem) {
+    return arr.indexOf(elem);
   },
 
   // returns the index of the first matching element from right to left
