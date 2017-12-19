@@ -57,8 +57,16 @@ global.bruhdash = {
   },
 
   // returns a slice of array with n elements dropped from the beignning
-  drop: function(){
-
+  drop: function(arr, n){
+    if (n === 0){
+      return arr;
+    }else if (n){
+      arr.splice(0, n);
+      return arr;
+    }else{
+      arr.shift();
+      return arr;
+    }
   },
 
   // returns a slice of array with n elements dropped from the end
