@@ -145,8 +145,17 @@ global.bruhdash = {
   },
 
   // removes elements of an array corresponding to the given indices
-  pullAt: function () {
-
+  pullAt: function (arr, ...indices) {
+    var newArray = [];
+    for (var i = 0; i < arr.length; i++){
+      for (var index of indices){
+        if(arr.indexOf(index)){
+          newArray.push(arr.splice(i, 1));
+        }
+      }
+    }
+    var flattenedArray = [].concat.apply([], newArray);
+    return flattenedArray;
   },
 
   // creates an array excluding all the specified values
