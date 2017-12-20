@@ -86,7 +86,21 @@ global.bruhdash = {
   },
 
   // creates a slice of an array with n elements taken from the beginning
-  take: function () {
+  take: function (arr, n) {
+    newArray = [];
+    if (n === 0){
+      return newArray;
+    }else if (n > arr.length){
+      return arr;
+    }else if (n){
+      for (var i = 0; i < n; i++){
+        newArray.push(arr[i]);
+      }
+      return newArray;
+    }else{
+      newArray.push(arr.shift());
+      return newArray;
+    }
 
   },
 
