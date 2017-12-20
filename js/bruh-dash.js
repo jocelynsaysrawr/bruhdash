@@ -101,12 +101,22 @@ global.bruhdash = {
       newArray.push(arr.shift());
       return newArray;
     }
-
   },
 
   // creates a slice of an array with n elements taken from the end
-  takeRight: function () {
-
+  takeRight: function (arr, n) {
+    newArray = [];
+    if (n){
+      arr.splice(0, arr.length - n);
+      return arr;
+    }else if (n === 0){
+      return newArray;
+    }else if (n > arr.length){
+      return arr;
+    }else{
+      newArray.push(arr.pop());
+      return newArray;
+    }
   },
 
   // fills elements of array with specified value from the start index
