@@ -170,10 +170,16 @@ global.bruhdash = {
   },
 
   // returns an array with specified values excluded
-  difference: function() {
-
+  difference: function(arr1, arr2) {
+    var newArray = [];
+    arr1.forEach(function(value){
+      if (arr2.indexOf(value) === -1){
+        newArray.push(value);
+      }
+    })
+    return newArray;
   },
-
+  
   /*******************
    *  STRETCH GOALS! *
    *******************/ 
