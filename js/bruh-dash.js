@@ -10,103 +10,220 @@ var global = window || GLOBAL;
 global.bruhdash = {
 
   // returns the first element of an array
-  first: function () {
-      
+  first: function (arr) {
+      return arr.shift();
   },
 
   // returns the last element of an array
-  last: function () {
-
+  last: function (arr) {
+    return arr.pop();
   },
 
   // returns the index of the first matching element from left to right
-  indexOf: function () {
-
+  indexOf: function (arr, elem) {
+    return arr.indexOf(elem);
   },
 
   // returns the index of the first matching element from right to left
-  lastIndexOf: function () {
-
+  lastIndexOf: function (arr, elem) {
+    return arr.lastIndexOf(elem);
   },
 
   // returns an array with all elements except for the last element
-  initial: function () {
-
+  initial: function (arr) {
+    var newArray = [];
+    for (var i = 0; i < arr.length; i++){
+      if (i < arr.length - 1){
+        newArray.push(arr[i]);
+      }
+    }
+    return newArray;
   },
   
   // returns an array with all falsey values removed
-  compact: function() {
-
+  compact: function(arr) {
+    var newArray = [];
+    for (var i = 0; i < arr.length; i++){
+      if (arr[i]){
+        newArray.push(arr[i]);
+      }
+    }
+    return newArray;
   },
 
   // creates a slice of an array from the start index up to but not including the end index
-  slice: function () {
-
+  slice: function (arr, start) {
+    return arr.slice(start, arr.length - 1);
   },
 
   // returns a slice of array with n elements dropped from the beignning
-  drop: function(){
-
+  drop: function(arr, n){
+    if (n === 0){
+      return arr;
+    }else if (n){
+      arr.splice(0, n);
+      return arr;
+    }else{
+      arr.shift();
+      return arr;
+    }
   },
 
   // returns a slice of array with n elements dropped from the end
-  dropRight: function() {
-
+  dropRight: function(arr, n) {
+    newArray = [];
+    if (n === 0){
+      return arr;
+    }else if (n){
+      for (var i = 0; i < arr.length - n; i++){
+        newArray.push(arr[i]);
+      }
+      return newArray;
+    }else{
+      arr.pop();
+      return arr;
+    }
   },
 
   // creates a slice of an array with n elements taken from the beginning
-  take: function () {
-
+  take: function (arr, n) {
+    newArray = [];
+    if (n === 0){
+      return newArray;
+    }else if (n > arr.length){
+      return arr;
+    }else if (n){
+      for (var i = 0; i < n; i++){
+        newArray.push(arr[i]);
+      }
+      return newArray;
+    }else{
+      newArray.push(arr.shift());
+      return newArray;
+    }
   },
 
   // creates a slice of an array with n elements taken from the end
-  takeRight: function () {
-
+  takeRight: function (arr, n) {
+    newArray = [];
+    if (n){
+      arr.splice(0, arr.length - n);
+      return arr;
+    }else if (n === 0){
+      return newArray;
+    }else if (n > arr.length){
+      return arr;
+    }else{
+      newArray.push(arr.pop());
+      return newArray;
+    }
   },
 
   // fills elements of array with specified value from the start index
   // up to but not including the end index
-  fill: function() {
-
+  fill: function(arr, value, start, end) {
+   for (var i = 0; i < arr.length; i++){
+     if (i >= start && i < end){
+       arr.splice(i, 1, value);
+     }else if (start === undefined && end === undefined){
+       arr.splice(i, 1, value);
+     }
+    }
+    return arr;
   },
 
   // removes all given values from an array
-  pull: function () {
-
+  pull: function (arr, ...values) {
+    for (var i = 0; i < arr.length; i++){
+      for (var value of values){
+        if (arr[i] === value){
+          arr.splice(i, 1);
+        }
+      }
+    }
+    return arr;
   },
 
   // removes elements of an array corresponding to the given indices
-  pullAt: function () {
-
+  pullAt: function (arr, ...indices) {
+    var newArray = [];
+    for (var i = 0; i < arr.length; i++){
+      for (var index of indices){
+        if(arr.indexOf(index)){
+          newArray.push(arr.splice(i, 1));
+        }
+      }
+    }
+    var flattenedArray = [].concat.apply([], newArray);
+    return flattenedArray;
   },
 
   // creates an array excluding all the specified values
-  without: function() {
-
+  without: function(arr, values) {
+    var newArray = [];
+    arr.forEach(function(index){
+      if (values.indexOf(index) === -1){
+        newArray.push(index);
+      }
+    })
+    return newArray;
   },
 
   // returns an array with specified values excluded
-  difference: function() {
-
+  difference: function(arr1, arr2) {
+    var newArray = [];
+    arr1.forEach(function(value){
+      if (arr2.indexOf(value) === -1){
+        newArray.push(value);
+      }
+    })
+    return newArray;
   },
-
+  
   /*******************
    *  STRETCH GOALS! *
    *******************/ 
 
   // creates an array of grouped elements
-  zip: function () {
-
+  zip: function (arr1, arr2) {
+    var newOuterArray = [];
+    var newInnerArray = [];
+     for (var i = 0; i < arr1.length; i++){
+       newInnerArray = [arr1[i], arr2[i]];
+       newOuterArray.push(newInnerArray);
+     }
+     return newOuterArray;
   },
 
   // creates an array of grouped elements in their pre-zip configuration
-  unzip: function () {
-
+  unzip: function (arr) {
+    var outerArray = [];
+    var innerArray1 = [];
+    var innerArray2 = [];
+     for (var i = 0; i < arr.length; i++){
+       innerArray1.push(arr[i][0]);
+       innerArray2.push(arr[i][1]);
+     }
+     outerArray.push(innerArray1);
+     outerArray.push(innerArray2);
+     return outerArray;
   },
 
   // creates an array of elements into groups of length of specified size
-  chunk: function(){
-
+  chunk: function(arr, size){
+    var newArray = [];
+    if ((arr.length / size) > size && size !== 0){
+      for (var i = 0; i < arr.length; i += size){
+        newArray.push(arr.slice(i, i + size));
+      }
+      return newArray;
+    }else if (arr.length === 0 || size === 0){
+      return newArray;
+    }else if (arr.length === size || arr.length < size){
+      newArray.push(arr);
+      return newArray;
+    }
+    
   },
 
   // iterates over elements of a collection and invokes iteratee for each element
